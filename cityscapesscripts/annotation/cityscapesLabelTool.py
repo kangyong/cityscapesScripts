@@ -30,6 +30,9 @@ except:
 # copy stuff
 import copy
 
+# switch language
+DEFINE_US=False
+
 #################
 ## Helper classes
 #################
@@ -1089,46 +1092,68 @@ class CityscapesLabelTool(QtGui.QMainWindow):
             self.screenshot()
 
     def displayHelpMessage(self):
-
         message = self.applicationTitle + "\n\n"
-        message += "INSTRUCTIONS\n"
-        message += " - press open (left button) to select a city from drop-down menu\n"
-        message += " - browse images and edit labels using\n"
-        message += "   the toolbar buttons (check tooltips) and the controls below\n"
-        message += " - note that the editing happens in-place;\n"
-        message += "   if you want to annotate your own images or edit a custom\n"
-        message += "   set of labels, check (and modify) the code of the method 'loadCity'\n"
-        message += " - note that this tool modifys the JSON polygon files, but\n"
-        message += "   does not create or update the pngs; for the latter use\n"
-        message += "   the preparation tools that come with this tool box.\n"
-        message += "\n"
-        message += "CONTROLS\n"
-        message += " - highlight objects [move mouse]\n"
-        message += " - draw new polygon\n"
-        message += "     - start drawing a polygon [left click]\n"
-        message += "     - add point to open polygon [left click]\n"
-        message += "     - delete last added point [Backspace]\n"
-        message += "     - close polygon [left click on first point]\n"
-        message += " - select closed polygon, existing object [Ctrl + left click]\n"
-        message += "     - move point [left click and hold on point, move mouse]\n"
-        message += "     - add point [click on edge]\n"
-        message += "     - delete point from polygon [Shift + left click on point]\n"
-        message += "     - deselect polygon [Q]\n"
-        message += "     - select multiple polygons [Ctrl + left click]\n"
-        message += " - intersect/merge two polygons: draw new polygon, then\n"
-        message += "     - intersect [Shift + left click on existing polygon]\n"
-        message += "     - merge [Alt + left click on existing polygon]\n"
-        message += " - open zoom window [Z or hold down right mouse button]\n"
-        message += "     - zoom in/out [mousewheel]\n"
-        message += "     - enlarge/shrink zoom window [shift+mousewheel]\n"
-        message += " - start correction mode [C]\n"
-        message += "     - draw a correction box [left click and hold, move, release]\n"
-        message += "     - set box type [1,2,3,4]\n"
-        message += "     - previous/next box [E,R]\n"
-        message += "     - delete box [D]\n"
-        message += "     - modify text, use ascii only [M]\n"
-
-        QtGui.QMessageBox.about(self, "HELP!", message)
+        if DEFINE_US:
+            message += "INSTRUCTIONS\n"
+            message += " - press open (left button) to select a city from drop-down menu\n"
+            message += " - browse images and edit labels using\n"
+            message += "   the toolbar buttons (check tooltips) and the controls below\n"
+            message += " - note that the editing happens in-place;\n"
+            message += "   if you want to annotate your own images or edit a custom\n"
+            message += "   set of labels, check (and modify) the code of the method 'loadCity'\n"
+            message += " - note that this tool modifys the JSON polygon files, but\n"
+            message += "   does not create or update the pngs; for the latter use\n"
+            message += "   the preparation tools that come with this tool box.\n"
+            message += "\n"
+            message += "CONTROLS\n"
+            message += " - highlight objects [move mouse]\n"
+            message += " - draw new polygon\n"
+            message += "     - start drawing a polygon [left click]\n"
+            message += "     - add point to open polygon [left click]\n"
+            message += "     - delete last added point [Backspace]\n"
+            message += "     - close polygon [left click on first point]\n"
+            message += " - select closed polygon, existing object [Ctrl + left click]\n"
+            message += "     - move point [left click and hold on point, move mouse]\n"
+            message += "     - add point [click on edge]\n"
+            message += "     - delete point from polygon [Shift + left click on point]\n"
+            message += "     - deselect polygon [Q]\n"
+            message += "     - select multiple polygons [Ctrl + left click]\n"
+            message += " - intersect/merge two polygons: draw new polygon, then\n"
+            message += "     - intersect [Shift + left click on existing polygon]\n"
+            message += "     - merge [Alt + left click on existing polygon]\n"
+            message += " - open zoom window [Z or hold down right mouse button]\n"
+            message += "     - zoom in/out [mousewheel]\n"
+            message += "     - enlarge/shrink zoom window [shift+mousewheel]\n"
+            message += " - start correction mode [C]\n"
+            message += "     - draw a correction box [left click and hold, move, release]\n"
+            message += "     - set box type [1,2,3,4]\n"
+            message += "     - previous/next box [E,R]\n"
+            message += "     - delete box [D]\n"
+            message += "     - modify text, use ascii only [M]\n"
+            QtGui.QMessageBox.about(self, "HELP!", message.decode("utf-8"))
+        else:
+            message += "说明:\n"
+            message += " - 点击打开文件，在下拉菜单选择要标注的目录\n"
+            message += " - 点击工具栏的按钮来浏览和编辑图片，操作方式见下面介绍\n"
+            message += " - 注意：标注操作本地JSON文件，会覆盖已有的内容;\n"
+            message += "\n"
+            message += "操作详情:\n"
+            message += " - 移动鼠标，会高亮显示已标注的目标\n"
+            message += " - 添加新目标(矩形)操作\n"
+            message += "     - 左击鼠标开始画矩形\n"
+            message += "     - 回车键删除最后一个画的点\n"
+            message += "     - 与第一个点重回，完成矩形的绘制\n"
+            message += " - 修改已有的矩形目标，用[Ctrl + 鼠标左点]选中\n"
+            message += "     - 改点: 鼠标左键选中点并拖动\n"
+            message += "     - 加点: 鼠标左键点击矩形的边\n"
+            message += "     - 删点: [Shift + 鼠标左点]\n"
+            message += "     - 删矩阵: d \n"
+            message += "     - 取消选择的矩阵: q 或 ESC(取消选择后才可以选择下一个矩阵)\n"
+            message += "     - 选取多个矩阵 [Ctrl + 鼠标左点] --调整图层可用\n"
+            message += " - 区域放大 [z 或 按下鼠标右键]\n"
+            message += "     - 窗口内视野的大小可以用 [鼠标滚动调整]\n"
+            message += "     - 放大窗口可用 [shift+鼠标滚动] 来调整\n"
+        QtGui.QMessageBox.about(self, "HELP!", message.decode("utf-8"))
         self.update()
 
     # Close the application
