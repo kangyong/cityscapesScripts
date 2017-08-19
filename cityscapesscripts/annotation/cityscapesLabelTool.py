@@ -282,7 +282,8 @@ class CityscapesLabelTool(QtGui.QMainWindow):
         # Filenames of all images in current city
         self.images           = []
         # Image extension
-        self.imageExt          = "_leftImg8bit.png"
+        self.imageExt          = ".jpg"
+        #self.imageExt          = "_leftImg8bit.png"
         # Ground truth extension
         self.gtExt             = "{}_polygons.json"
         # Current image as QImage
@@ -666,7 +667,8 @@ class CityscapesLabelTool(QtGui.QMainWindow):
 
             if ok and item:
                 (split,gt,city) = [ str(i) for i in item.split(', ') ]
-                self.config.city     = os.path.normpath( os.path.join( csPath, "leftImg8bit" , split , city ) )
+                self.config.city     = os.path.normpath( os.path.join( csPath, gt , split , city ) )
+                #self.config.city     = os.path.normpath( os.path.join( csPath, "leftImg8bit" , split , city ) )
                 self.config.cityName = city
 
                 self.config.labelPath      = os.path.normpath( os.path.join( csPath, gt               , split , city ) )
